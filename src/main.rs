@@ -1,21 +1,23 @@
-// 関数
-
-fn plus_one(x: i32) -> i32 {
-    return x + 1;
-}
-
-fn plus_one2(x: i32) -> i32 {
-    x + 1
-}
-
+// 制御フロー
 fn main() {
-    let x = plus_one(5);
-    let x2 = plus_one2(5);
-    println!("The value of x is: {}", x);
-    println!("The value of x is: {}", x2);
-}
+    let mut count = 0;
+    // ループラベル
+    'counting_up: loop {
+        println!("count = {}", count);
+        let mut remaining = 10;
 
-// 文：値を返さない。何らかの動作をして値を返さない命令
-// 式：値を返す
-// Rustにおける「；」は式を文に変える演算子
-// Rustは式志向言語
+        loop {
+            println!("remaining = {}", remaining);
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!("End count = {}", count);
+}
