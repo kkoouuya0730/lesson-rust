@@ -1,21 +1,36 @@
-// 所有権
+// 構造体
 fn main() {
-    let my_string = String::from("hello world");
+    let mut user = User {
+        email: String::from("some@example.com"),
+        username: String::from("test"),
+        active: true,
+        sign_in_count: 1,
+    };
+    user.email = String::from("test@example.com");
 
-    let word = first_word(&my_string[..]);
+    let email = String::from("some@example.com");
+    let username = String::from("test");
 
-    let my_string_literal = "hello world";
-    let word = first_word(&my_string_literal[..]);
-    let word = first_word(my_string_literal);
+    let user2 = build_user(email, username);
+    let user3 = User {
+        email: String::from("some@example.com"),
+        username: String::from("test"),
+        ..user
+    };
 }
-fn first_word(s: &str) -> &str {
-    let bytes = s.as_bytes();
 
-    for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return &s[0..i];
-        }
+struct User {
+    username: String,
+    email: String,
+    sign_in_count: u64,
+    active: bool,
+}
+
+fn build_user(email: String, username: String) -> User {
+    User {
+        email,
+        username,
+        active: true,
+        sign_in_count: 1,
     }
-
-    &s[..]
 }
