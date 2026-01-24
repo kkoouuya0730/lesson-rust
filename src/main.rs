@@ -1,26 +1,21 @@
 // 所有権
 fn main() {
-    let s = String::from("hello"); // sがスコープに入る
+    let my_string = String::from("hello world");
 
-    takes_ownership(s); // sの値が関数にムーブされ...
-    // ... ここではもう有効ではない
-    println!("{}", s);
+    let word = first_word(&my_string[..]);
 
-    let x = 5; // xがスコープに入る
-
-    makes_copy(x); // xも関数にムーブされるが、
-    // i32はCopyなので、この後にxを使っても
-    // 大丈夫
-    println!("{}", x);
+    let my_string_literal = "hello world";
+    let word = first_word(&my_string_literal[..]);
+    let word = first_word(my_string_literal);
 }
+fn first_word(s: &str) -> &str {
+    let bytes = s.as_bytes();
 
-fn takes_ownership(some_string: String) {
-    // some_stringがスコープに入る。
-    println!("{}", some_string);
-} // ここでsome_stringがスコープを抜け、`drop`が呼ばれる。後ろ盾してたメモリが解放される。
-//
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
 
-fn makes_copy(some_integer: i32) {
-    // some_integerがスコープに入る
-    println!("{}", some_integer);
-} // ここでsome_integerがスコープを抜ける。何も特別なことはない。
+    &s[..]
+}
