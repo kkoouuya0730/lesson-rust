@@ -1,35 +1,24 @@
 // enum
 fn main() {
-    let quarter = Coin::Quarter(UsState::Alabama);
-    let penny = Coin::Penny;
-    let x = value_in_coins(quarter);
-    println!("x is {}", x);
-    println!("penny is {:#?}", penny);
-}
-#[derive(Debug)]
-enum UsState {
-    Alabama,
-    Alaska,
-}
-#[derive(Debug)]
-enum Coin {
-    Penny,
-    Nickel,
-    Dime,
-    Quarter(UsState),
+    let five = None;
+    let seven = Some(7);
+    let six = plus_one(five);
+    let none = plus_one(None);
+    let y = match seven {
+        Some(x) => x,
+        None => 0,
+    };
+
+    println!("five is {:?}", five);
+    println!("five is {:?}", seven);
+    println!("five is {:?}", six);
+    println!("five is {:?}", none);
+    println!("five is {:?}", y);
 }
 
-fn value_in_coins(coin: Coin) -> u32 {
-    match coin {
-        Coin::Penny => {
-            println!("Lucky Penny");
-            1
-        }
-        Coin::Nickel => 5,
-        Coin::Dime => 10,
-        Coin::Quarter(state) => {
-            println!("State quarter from {:?}!", state);
-            25
-        }
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i + 1),
     }
 }
