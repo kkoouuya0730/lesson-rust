@@ -1,16 +1,35 @@
 // enum
 fn main() {
-    let m = Message::Write(String::from("Hello"));
-    m.call();
+    let quarter = Coin::Quarter(UsState::Alabama);
+    let penny = Coin::Penny;
+    let x = value_in_coins(quarter);
+    println!("x is {}", x);
+    println!("penny is {:#?}", penny);
+}
+#[derive(Debug)]
+enum UsState {
+    Alabama,
+    Alaska,
+}
+#[derive(Debug)]
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
 }
 
-enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
-    ChangeColor(i32, i32, i32),
-}
-
-impl Message {
-    fn call(&self) {}
+fn value_in_coins(coin: Coin) -> u32 {
+    match coin {
+        Coin::Penny => {
+            println!("Lucky Penny");
+            1
+        }
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) => {
+            println!("State quarter from {:?}!", state);
+            25
+        }
+    }
 }
