@@ -1,70 +1,13 @@
 mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
-        fn seat_at_table() {}
-    }
-
-    mod serving {
-        fn take_order() {}
-        fn serve_order() {}
-        fn take_payment() {}
     }
 }
 
-mod back_of_house {
-    pub struct Breakfast {
-        pub toast: String,
-        seasonal_fruit: String,
-    }
-
-    impl Breakfast {
-        pub fn summer(toast: &str) -> Breakfast {
-            Breakfast {
-                toast: String::from(toast),
-                seasonal_fruit: String::from("peaches"),
-            }
-        }
-
-        pub fn winter(toast: &str) -> Breakfast {
-            Breakfast {
-                toast: String::from(toast),
-                seasonal_fruit: String::from("apple"),
-            }
-        }
-    }
-
-    pub enum Appetizer {
-        Soup,
-        Salad,
-    }
-
-    // fn fix_incorrect_order() {
-    //     cook_order();
-    //     super::serve_order();
-    // }
-
-    // fn cook_order();
-}
-
-// pub fn eat_at_restaurant() {
-//     // 絶対パス
-//     crate::front_of_house::hosting::add_to_waitlist();
-//     // 相対パス
-//     front_of_house::hosting::add_to_waitlist();
-// }
+use self::front_of_house::hosting;
 
 pub fn eat_at_restaurant() {
-    let mut meal = back_of_house::Breakfast::summer("Rye");
-
-    meal.toast = String::from("Wheat");
-    println!("I'd like {} toast please", meal.toast);
-
-    let mut meal2 = back_of_house::Breakfast::winter("Banana");
-
-    meal2.toast = String::from("Wheat");
-    meal2.seasonal_fruit = String::from("blueberries");
-    println!("I'd like {} toast please", meal2.toast);
-
-    let order1 = back_of_house::Appetizer::Salad;
-    let order2 = back_of_house::Appetizer::Soup;
+    hosting::add_to_waitlist();
+    hosting::add_to_waitlist();
+    hosting::add_to_waitlist();
 }
