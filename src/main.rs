@@ -2,45 +2,35 @@ use std::vec;
 
 // ベクタ
 fn main() {
-    let mut v = vec![1, 2, 3];
+    // let data = "initial contents";
 
-    let third: &i32 = &v[2];
+    // let s = data.to_string();
 
-    println!("The third element is {}", third);
+    // let s = "initial contents".to_string();
 
-    match v.get(2) {
-        Some(third) => println!("The third element is {}", third),
-        None => println!("There is no third element"),
+    // let mut s = String::from("foo");
+    // s.push_str("bar");
+    // s.push('b');
+    // println!("The value of s is: {}", s);
+
+    let mut s1 = String::from("foo");
+    let s2 = "bar";
+    s1.push_str(s2);
+    println!("s2 is {}", s2);
+
+    // 文字列に添え字でアクセスできない
+    let s3 = String::from("hello");
+    // let h = s3[0];
+
+    let hello = "Здравствуйте";
+    let s = &hello[0..4];
+    // let s = &hello[0..1];
+
+    for c in "नमस्ते".chars() {
+        println!("{}", c);
     }
 
-    // 最初の要素への参照が、ベクタの終端への変更を気にする必要はなさそうだが、
-    // 新たな要素を追加するときに、今のベクタのある場所に全要素を隣り合わせに配置することができない可能性がある
-    // そうなったら新しいメモリに割り当て、古い要素を新しいスペースにコピーする必要がある
-    // その場合、最初の要素を指す参照は解放されたメモリを指すことになる
-    let first = &v[0];
-    v.push(6);
-    println!("The first element is : {}", first);
-
-    let v2 = vec![100, 321, 3];
-    for i in &v2 {
-        println!("{}", i);
+    for c in "नमस्ते".bytes() {
+        println!("{}", c);
     }
-
-    let mut v3 = vec![100, 321, 3];
-    for i in &mut v3 {
-        // 参照外し演算子(*)
-        *i += 50;
-    }
-
-    enum SpreadSheetCell {
-        Int(i32),
-        Float(f64),
-        Text(String),
-    }
-
-    let row = vec![
-        SpreadSheetCell::Int(3),
-        SpreadSheetCell::Text(String::from("blue")),
-        SpreadSheetCell::Float(10.12),
-    ];
 }
