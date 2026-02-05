@@ -1,24 +1,12 @@
-// クロージャで環境をキャプチャする
+// スマートポインタ Box
+
+enum List {
+    Cons(i32, Box<List>),
+    Nil,
+}
+
+use List::{Cons, Nil};
 
 fn main() {
-    let x = 4;
-    // let equal_to_x = |z| z == x;
-    // 関数ではxを使うことができない
-    fn equal_to_x(z: i32) -> bool {
-        z == x
-    }
-
-    let y = 4;
-    assert!(equal_to_x(y));
-
-    let x = vec![1, 2, 3];
-
-    let equal_to_x = move |z| z == x;
-
-    // ここでは、xを使用できません: {:?}
-    println!("can't use x here: {:?}", x);
-
-    let y = vec![1, 2, 3];
-
-    assert!(equal_to_x(y));
+    let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
 }
