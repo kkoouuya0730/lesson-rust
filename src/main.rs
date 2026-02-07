@@ -1,25 +1,41 @@
-// スマートポインタ RefCell<T>
-#[derive(Debug)]
-enum List {
-    Cons(Rc<RefCell<i32>>, Rc<List>),
-    Nil,
-}
+// スレッド
 
-use List::{Cons, Nil};
-use std::cell::RefCell;
-use std::rc::Rc;
+use std::thread;
+use std::time::Duration;
 
 fn main() {
-    let value = Rc::new(RefCell::new(5));
+    // thread::spawn(|| {
+    //     for i in 1..10 {
+    //         println!("やあ！立ち上げたスレッドから数字{}だよ！", i);
+    //         thread::sleep(Duration::from_millis(1));
+    //     }
+    // });
 
-    let a = Rc::new(Cons(Rc::clone(&value), Rc::new(Nil)));
+    // for i in 1..5 {
+    //     println!("メインスレッドから数字{}だよ！", i);
+    //     thread::sleep(Duration::from_millis(1));
+    // }
 
-    let b = Cons(Rc::new(RefCell::new(6)), Rc::clone(&a));
-    let c = Cons(Rc::new(RefCell::new(10)), Rc::clone(&a));
+    // let handle = thread::spawn(|| {
+    //     for i in 1..10 {
+    //         println!("hi number {} from the spawned thread!", i);
+    //         thread::sleep(Duration::from_millis(1));
+    //     }
+    // });
 
-    *value.borrow_mut() += 10;
+    // for i in 1..5 {
+    //     println!("hi number {} from the main thread!", i);
+    //     thread::sleep(Duration::from_millis(1));
+    // }
 
-    println!("a after = {:?}", a);
-    println!("b after = {:?}", b);
-    println!("c after = {:?}", c);
+    // // handleが表すスレッドが終了するまで、現在実行中のスレッドをブロックする
+    // handle.join().unwrap();
+
+    let v = vec![1, 2, 3];
+
+    let handle = thread::spawn(move || {
+        println!("Here's a vector: {:?}", v);
+    });
+
+    handle.join().unwrap();
 }
