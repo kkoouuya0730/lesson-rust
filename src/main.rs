@@ -1,46 +1,62 @@
-// Mutex
+// unsafe
 
-use std::sync::{Arc, Mutex};
-use std::{thread, vec};
+static mut COUNTER: u32 = 0;
+
+fn add_to_count(inc: u32) {
+    unsafe {
+        COUNTER += inc;
+    }
+}
 
 fn main() {
-    // let counter = Mutex::new(0);
-    // let mut handles = vec![];
+    add_to_count(3);
 
-    // let handle = thread::spawn(move || {
-    //     let mut num = counter.lock().unwrap();
+    unsafe {
+        println!("COUNTER: {}", COUNTER);
+    }
+    // let mut num = 5;
+    // let r1 = &num as *const i32;
+    // let r2 = &mut num as *mut i32;
 
-    //     *num += 1;
-    // });
-    // handles.push(handle);
+    // let address = 0x012345usize;
+    // let r = address as *const i32;
 
-    // let handle2 = thread::spawn(move || {
-    //     let mut num2 = counter.lock().unwrap();
-
-    //     *num2 += 1;
-    // });
-    // handles.push(handle2);
-
-    // for handle in handles {
-    //     handle.join().unwrap();
+    // println!("address is: {}", address);
+    // unsafe {
+    //     println!("{}", *r1);
+    //     println!("{}", *r2);
+    //     println!("{}", *r);
     // }
 
-    // println!("Result: {}", *counter.lock().unwrap());
+    // unsafe fn dangerous() {}
+    // dangerous();
 
-    let counter = Arc::new(Mutex::new(0));
-    let mut handles = vec![];
+    // unsafe {
+    //     dangerous();
+    // }
 
-    for _ in 0..10 {
-        let counter = Arc::clone(&counter);
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().unwrap();
-            *num += 1;
-        });
-        handles.push(handle);
+    // let mut v = vec![1, 2, 3, 4, 5, 6];
+
+    // let r = &mut v[..];
+
+    // let (a, b) = r.split_at_mut(3);
+
+    // assert_eq!(a, &mut [1, 2, 3]);
+    // assert_eq!(b, &mut [4, 5, 6]);
+}
+
+use std::slice;
+
+fn split_at_mut(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
+    let len = slice.len();
+    let ptr = slice.as_mut_ptr();
+
+    assert!(mid <= len);
+
+    unsafe {
+        (
+            slice::from_raw_parts_mut(ptr, mid),
+            slice::from_raw_parts_mut(ptr.offset(mid as isize), len - mid),
+        )
     }
-
-    for handle in handles {
-        handle.join().unwrap();
-    }
-    println!("Result: {}", *counter.lock().unwrap());
 }
